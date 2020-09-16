@@ -1,4 +1,4 @@
-package com.visitas;
+package com.PQR;
 
 import javax.swing.JOptionPane;
 
@@ -10,7 +10,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
-import com.visitas.controller.UsuarioControl;
+import com.PQR.GUI.ArquitecturaUI;
+import com.PQR.controller.UsuarioControl;
 
 
 @SpringBootApplication
@@ -20,20 +21,19 @@ public class PqrApplication implements CommandLineRunner {
 	
 	
 	public static void main(String[] args) {
-		UsuarioControl u= new UsuarioControl();
-		logger.info("Mensaje A");
+		UsuarioControl u= new UsuarioControl();		
 		SpringApplication.run(PqrApplication.class, args);
-		u.login("","");
-		u.getAllPQR();
-		logger.info("Mensaje B");
-		//System.setProperty("java.awt.headless", "false");
-		//JOptionPane.showMessageDialog(null, "Javadesde0.com");
+		
+		System.setProperty("java.awt.headless", "false");
+		
+		ArquitecturaUI a = new ArquitecturaUI();
+                a.setVisible(true);
+		
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub		
 		logger.info("Mensaje C");
 	}
 	

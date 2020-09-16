@@ -1,4 +1,4 @@
-package com.visitas.dominio;
+package com.PQR.model;
 
 public class Usuario {
 

@@ -1,4 +1,4 @@
-package com.visitas.controller;
+package com.PQR.controller;
 
 import java.net.URI;
 
@@ -10,22 +10,26 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import com.visitas.dominio.Usuario;
+import com.PQR.model.Usuario;
 
 public class UsuarioControl {
 
 	private Usuario usuario;
 
+        public UsuarioControl(){
+            
+        }
+        
 	// ingresar al sistema
-	public void login(String email, String password) {
+	public boolean login(String email, String password) {
 		RestTemplate restTemplate = new RestTemplate();
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
 		JSONObject personJsonObject = new JSONObject();
-		personJsonObject.put("email", "pqr.sistemas@gmail.com");
-		personJsonObject.put("password", "123456");
+		personJsonObject.put("email", email);
+		personJsonObject.put("password", password);
 
 		// personJsonObject.put("email", email);
 		// personJsonObject.put("password",password);
@@ -39,14 +43,14 @@ public class UsuarioControl {
 
 		Usuario u = restTemplate.postForObject(myUri, request, Usuario.class);
 		usuario = u;
-		System.out.println(personJsonObject);
-
-		System.out.println("\n token-----> " + u.getToken());
+		if(u!=null && u.getToken()!=null){
+                    return true;
+                }return false;
 
 	}
 
 	// crear usuario rol=usuario
-	public void crearUsuario(String name, String password, String email) {
+	public boolean crearUsuario(String name, String password, String email) {
 
 		JSONObject personJsonObject = new JSONObject();
 		personJsonObject.put("email", email);
@@ -62,7 +66,12 @@ public class UsuarioControl {
 		HttpEntity<String> request = new HttpEntity<String>(personJsonObject.toString(), headers);
 		
 		Usuario u = restTemplate.postForObject(myUri, request, Usuario.class);
-		usuario = u;
+		usuario = u;               
+              
+		if(u!=null && u.getToken()!=null){
+                    return true;
+                }return false;
+                
 	}
 
 	// optener todas las pqr
@@ -79,4 +88,23 @@ public class UsuarioControl {
 		System.out.println("\n obtener cosas ---->" + u);
 	}
 
+	public void crearPQR(String subject, String description) {
+		
+		//cuerpo Json
+		JSONObject personJsonObject = new JSONObject();
+		personJsonObject.put("subject", subject);		
+		personJsonObject.put("description", description);		
+
+		//cabecera
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.add("Authorization", usuario.getToken());
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		URI myUri = URI.create("https://pqr-api-rails.herokuapp.com/users");
+		HttpEntity<String> request = new HttpEntity<String>(personJsonObject.toString(), headers);
+		
+		String u = restTemplate.postForObject(myUri, request, String.class);
+	}
 }
