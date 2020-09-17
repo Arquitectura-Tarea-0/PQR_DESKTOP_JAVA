@@ -9,6 +9,7 @@ import com.PQR.controller.UsuarioControl;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -23,7 +24,6 @@ public class ArquitecturaUI extends javax.swing.JFrame {
 
     public ArquitecturaUI() {
         initComponents();
-
         uControl = new UsuarioControl();
     }
 
@@ -41,11 +41,11 @@ public class ArquitecturaUI extends javax.swing.JFrame {
         jPanel_crear_pqr = new javax.swing.JPanel();
         label_titulo = new java.awt.Label();
         jLabel1 = new javax.swing.JLabel();
-        jTextField_solicitud = new javax.swing.JTextField();
+        jTextField_solicitud_asunto = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox_tipo_solicitud = new javax.swing.JComboBox<>();
+        jComboBox_solicitud_tipo = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea_datos_solicitud = new javax.swing.JTextArea();
+        jTextArea_solicitud_cuerpo = new javax.swing.JTextArea();
         jButton_cancelar_pqr = new javax.swing.JButton();
         jButton_crear_pqr = new javax.swing.JButton();
         panel_formulario1 = new javax.swing.JPanel();
@@ -56,12 +56,13 @@ public class ArquitecturaUI extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jComboBox_filtro_tipo_solicitud = new javax.swing.JComboBox<>();
-        jComboBox_estado_solicitud = new javax.swing.JComboBox<>();
-        jDateChooser_fecha_respuesta = new com.toedter.calendar.JDateChooser();
-        jDateChooser_fecha_cierre = new com.toedter.calendar.JDateChooser();
+        jComboBox_filtro_estado_solicitud = new javax.swing.JComboBox<>();
+        jDateChooser_filtro_fecha_respuesta = new com.toedter.calendar.JDateChooser();
+        jDateChooser_filtro_fecha_cierre = new com.toedter.calendar.JDateChooser();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable_info_pqrs = new javax.swing.JTable();
+        jButton_cargar_mis_pqr = new javax.swing.JButton();
         info_solicitud = new javax.swing.JDialog();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -109,16 +110,21 @@ public class ArquitecturaUI extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Tipo de solicitud");
 
-        jComboBox_tipo_solicitud.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox_tipo_solicitud.addActionListener(new java.awt.event.ActionListener() {
+        jComboBox_solicitud_tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "peticion", "queja", "reclamo" }));
+        jComboBox_solicitud_tipo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox_solicitud_tipoItemStateChanged(evt);
+            }
+        });
+        jComboBox_solicitud_tipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox_tipo_solicitudActionPerformed(evt);
+                jComboBox_solicitud_tipoActionPerformed(evt);
             }
         });
 
-        jTextArea_datos_solicitud.setColumns(20);
-        jTextArea_datos_solicitud.setRows(5);
-        jScrollPane1.setViewportView(jTextArea_datos_solicitud);
+        jTextArea_solicitud_cuerpo.setColumns(20);
+        jTextArea_solicitud_cuerpo.setRows(5);
+        jScrollPane1.setViewportView(jTextArea_solicitud_cuerpo);
 
         jButton_cancelar_pqr.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton_cancelar_pqr.setText("Cancelar");
@@ -130,6 +136,11 @@ public class ArquitecturaUI extends javax.swing.JFrame {
 
         jButton_crear_pqr.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton_crear_pqr.setText("Crear Solicitud");
+        jButton_crear_pqr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_crear_pqrActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel_crear_pqrLayout = new javax.swing.GroupLayout(jPanel_crear_pqr);
         jPanel_crear_pqr.setLayout(jPanel_crear_pqrLayout);
@@ -144,20 +155,20 @@ public class ArquitecturaUI extends javax.swing.JFrame {
                 .addGroup(jPanel_crear_pqrLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel_crear_pqrLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton_cancelar_pqr, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton_crear_pqr, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(61, 61, 61)
+                        .addComponent(jButton_cancelar_pqr, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(64, 64, 64)
+                        .addComponent(jButton_crear_pqr, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel_crear_pqrLayout.createSequentialGroup()
                         .addGroup(jPanel_crear_pqrLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel_crear_pqrLayout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(0, 285, Short.MAX_VALUE))
-                            .addComponent(jTextField_solicitud))
+                            .addComponent(jTextField_solicitud_asunto))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel_crear_pqrLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(jComboBox_tipo_solicitud, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jComboBox_solicitud_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(21, 21, 21))
         );
         jPanel_crear_pqrLayout.setVerticalGroup(
@@ -171,14 +182,14 @@ public class ArquitecturaUI extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_crear_pqrLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField_solicitud, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox_tipo_solicitud, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField_solicitud_asunto, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox_solicitud_tipo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel_crear_pqrLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel_crear_pqrLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton_crear_pqr, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
-                    .addComponent(jButton_cancelar_pqr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton_cancelar_pqr, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -206,13 +217,13 @@ public class ArquitecturaUI extends javax.swing.JFrame {
         jLabel7.setText("Fecha de cierre");
         panel1.add(jLabel7);
 
-        jComboBox_filtro_tipo_solicitud.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox_filtro_tipo_solicitud.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "peticion", "queja", "reclamo" }));
         panel1.add(jComboBox_filtro_tipo_solicitud);
 
-        jComboBox_estado_solicitud.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        panel1.add(jComboBox_estado_solicitud);
-        panel1.add(jDateChooser_fecha_respuesta);
-        panel1.add(jDateChooser_fecha_cierre);
+        jComboBox_filtro_estado_solicitud.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "radicada", "en_proceso", "resuelto", "cerrado" }));
+        panel1.add(jComboBox_filtro_estado_solicitud);
+        panel1.add(jDateChooser_filtro_fecha_respuesta);
+        panel1.add(jDateChooser_filtro_fecha_cierre);
 
         jTable_info_pqrs.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jTable_info_pqrs.setModel(new javax.swing.table.DefaultTableModel(
@@ -241,8 +252,15 @@ public class ArquitecturaUI extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
         );
+
+        jButton_cargar_mis_pqr.setText("cargar");
+        jButton_cargar_mis_pqr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_cargar_mis_pqrActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panel_formulario1Layout = new javax.swing.GroupLayout(panel_formulario1);
         panel_formulario1.setLayout(panel_formulario1Layout);
@@ -254,19 +272,23 @@ public class ArquitecturaUI extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE))
                     .addGroup(panel_formulario1Layout.createSequentialGroup()
-                        .addGap(171, 171, 171)
-                        .addComponent(label_pqrs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(panel_formulario1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(panel_formulario1Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(label_pqrs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57)
+                .addComponent(jButton_cargar_mis_pqr, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_formulario1Layout.setVerticalGroup(
             panel_formulario1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_formulario1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(label_pqrs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panel_formulario1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(label_pqrs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_cargar_mis_pqr))
                 .addGap(4, 4, 4)
                 .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -429,14 +451,15 @@ public class ArquitecturaUI extends javax.swing.JFrame {
                                     .addComponent(jLabel_correo))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(panel_formularioLayout.createSequentialGroup()
-                        .addGap(104, 104, 104)
-                        .addComponent(jButton_registro)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGroup(panel_formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panel_formularioLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel_respuesta_registro, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panel_formularioLayout.createSequentialGroup()
+                                .addGap(125, 125, 125)
+                                .addComponent(jButton_registro)))
+                        .addGap(0, 40, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(panel_formularioLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel_respuesta_registro, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
         );
         panel_formularioLayout.setVerticalGroup(
             panel_formularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -453,9 +476,9 @@ public class ArquitecturaUI extends javax.swing.JFrame {
                 .addComponent(jLabel_contraseña)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPassword_registro, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton_registro, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(23, 23, 23)
                 .addComponent(jLabel_respuesta_registro, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -568,7 +591,8 @@ public class ArquitecturaUI extends javax.swing.JFrame {
                 && nombre != "" 
                 && password != null 
                 && password != "") {
-            if (uControl.crearUsuario(nombre, password, nombre)) {
+            if (uControl.crearUsuario(nombre, password, nombre)) {               
+               
                 jLabel_respuesta_registro.setText("Registro exitoso, por favor inicie sesion.");
             } else {
                 jLabel_respuesta_registro.setText("El usuario ya existe.");
@@ -584,14 +608,18 @@ public class ArquitecturaUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_correo_inicio_sesionActionPerformed
 
-    private void jComboBox_tipo_solicitudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_tipo_solicitudActionPerformed
+    private void jComboBox_solicitud_tipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_solicitud_tipoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox_tipo_solicitudActionPerformed
+    }//GEN-LAST:event_jComboBox_solicitud_tipoActionPerformed
 
     private void jButton_cancelar_pqrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_cancelar_pqrActionPerformed
         // TODO add your handling code here:
-        jTextField_solicitud.setText("");
-        jTextArea_datos_solicitud.setText("");
+        jTextField_solicitud_asunto.setText("");
+        jTextArea_solicitud_cuerpo.setText("");
+        this.crear_pqrs.setVisible(false); 
+        ArquitecturaUI a = new ArquitecturaUI();
+        a.setVisible(true);
+        //this.jPanel_inicio.setVisible(true);
     }//GEN-LAST:event_jButton_cancelar_pqrActionPerformed
 
     //boton inicio de sesión
@@ -602,7 +630,7 @@ public class ArquitecturaUI extends javax.swing.JFrame {
 
         if (uControl.login(email, password)) {
             dispose();
-            this.crear_pqrs.setVisible(true);
+            this.crear_pqrs.setVisible(true);          
         }
 
         this.jTextField_correo_inicio_sesion.setText("");
@@ -615,54 +643,79 @@ public class ArquitecturaUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton_añadir_anotacionActionPerformed
 
+    private void jComboBox_solicitud_tipoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_solicitud_tipoItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox_solicitud_tipoItemStateChanged
+
+    
+    //crear solicitud
+    private void jButton_crear_pqrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_crear_pqrActionPerformed
+        
+        String asunto= jTextField_solicitud_asunto.getText();
+        String cuerpo= jTextArea_solicitud_cuerpo.getText();
+        String tipo=jComboBox_solicitud_tipo.getSelectedItem().toString();
+        uControl.crearPQR(asunto, cuerpo, tipo);
+        
+    }//GEN-LAST:event_jButton_crear_pqrActionPerformed
+
+    private void jButton_cargar_mis_pqrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_cargar_mis_pqrActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel model = new DefaultTableModel();
+        
+        
+        
+    }//GEN-LAST:event_jButton_cargar_mis_pqrActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ArquitecturaUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ArquitecturaUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ArquitecturaUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ArquitecturaUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ArquitecturaUI().setVisible(true);
-            }
-        });
-    }
+    
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(ArquitecturaUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(ArquitecturaUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(ArquitecturaUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(ArquitecturaUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new ArquitecturaUI().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog crear_pqrs;
     private javax.swing.JDialog info_solicitud;
     private javax.swing.JButton jButton_añadir_anotacion;
     private javax.swing.JButton jButton_cancelar_pqr;
+    private javax.swing.JButton jButton_cargar_mis_pqr;
     private javax.swing.JButton jButton_crear_pqr;
     private javax.swing.JButton jButton_inicio_sesion;
     private javax.swing.JButton jButton_registro;
-    private javax.swing.JComboBox<String> jComboBox_estado_solicitud;
+    private javax.swing.JComboBox<String> jComboBox_filtro_estado_solicitud;
     private javax.swing.JComboBox<String> jComboBox_filtro_tipo_solicitud;
-    private javax.swing.JComboBox<String> jComboBox_tipo_solicitud;
-    private com.toedter.calendar.JDateChooser jDateChooser_fecha_cierre;
-    private com.toedter.calendar.JDateChooser jDateChooser_fecha_respuesta;
+    private javax.swing.JComboBox<String> jComboBox_solicitud_tipo;
+    private com.toedter.calendar.JDateChooser jDateChooser_filtro_fecha_cierre;
+    private com.toedter.calendar.JDateChooser jDateChooser_filtro_fecha_respuesta;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -694,12 +747,12 @@ public class ArquitecturaUI extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane_inicio;
     private javax.swing.JTable jTable_info_pqrs;
     private javax.swing.JTextArea jTextArea_anotaciones;
-    private javax.swing.JTextArea jTextArea_datos_solicitud;
     private javax.swing.JTextArea jTextArea_info_solicitud;
+    private javax.swing.JTextArea jTextArea_solicitud_cuerpo;
     private javax.swing.JTextField jTextField_correo_inicio_sesion;
     private javax.swing.JTextField jTextField_correo_registro;
     private javax.swing.JTextField jTextField_nombre_registro;
-    private javax.swing.JTextField jTextField_solicitud;
+    private javax.swing.JTextField jTextField_solicitud_asunto;
     private java.awt.Label label_pqrs;
     private java.awt.Label label_titulo;
     private java.awt.Panel panel1;
