@@ -3,6 +3,7 @@ package com.PQR.controller;
 import com.PQR.model.Request;
 import com.PQR.model.User;
 import java.net.URI;
+import javax.swing.JOptionPane;
 
 import org.json.*;
 import org.springframework.http.HttpEntity;
@@ -84,8 +85,11 @@ public class UsuarioControl {
         personJsonObject.put("description", description);
         personJsonObject.put("request_type", tipo);
 
-        this.post(usuario.getToken(), personJsonObject, "https://pqr-api-rails.herokuapp.com/requests/create");
-
+        String respuesta=this.post(usuario.getToken(), personJsonObject, "https://pqr-api-rails.herokuapp.com/requests/create");
+        JSONObject r= new JSONObject(respuesta);
+        Request solicitud= new Request();
+        solicitud.requestFromJson(new JSONObject(r.get("request").toString()));
+        JOptionPane.showMessageDialog(null, solicitud.toString());
         return true;
 
     }    

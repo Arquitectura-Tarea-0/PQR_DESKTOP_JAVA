@@ -1,7 +1,5 @@
 package com.PQR;
 
-import javax.swing.JOptionPane;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -20,10 +18,9 @@ public class PqrApplication implements CommandLineRunner {
 	private final static Logger logger = LoggerFactory.getLogger(PqrApplication.class);
 	
 	
-	public static void main(String[] args) {
-		UsuarioControl u= new UsuarioControl();		
+	public static void main(String[] args) {			
 		SpringApplication.run(PqrApplication.class, args);
-		
+		UsuarioControl u= new UsuarioControl();	
 		System.setProperty("java.awt.headless", "false");
 		
 		ArquitecturaUI a = new ArquitecturaUI();

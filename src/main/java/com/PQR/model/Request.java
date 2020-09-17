@@ -93,9 +93,15 @@ public class Request {
 
     @Override
     public String toString() {
-        return "Request [createdAt=" + createdAt + ", description=" + description + ", id=" + id + ", requestState="
-                + requestState + ", requestType=" + requestType + ", respondedAt=" + respondedAt + ", subject="
-                + subject + ", updatedAt=" + updatedAt + ", userId=" + userId + "]";
+        return "Request [createdAt=" + createdAt 
+                + "\nDescription=" + description 
+                + "\nId=" + id 
+                + "\nRequestState="+ requestState 
+                + "\nRequestType=" + requestType 
+                + "\nRespondedAt=" + respondedAt 
+                + "\nSubject="+ subject 
+                + "\nUpdatedAt=" + updatedAt 
+                + "\nUserId=" + userId + "]";
     }
     
 }
